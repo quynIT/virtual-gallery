@@ -1,10 +1,13 @@
 <script setup>
 
+import ButtonLogin from "./components/ButtonLogin.vue";
+import NavbarAnimation from "./components/NavbarAnimation.vue";
 </script>
 
 <template>
   <main>
-    <router-view /> 
+    <!-- <NavbarAnimation/> -->
+    <ButtonLogin/>
   </main>
 </template>
 

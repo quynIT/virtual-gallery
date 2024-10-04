@@ -1,16 +1,20 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HelloWorld from '../components/HelloWorld.vue';
-import TheWelcome from '../components/TheWelcome.vue';
 import NotFound from '../page/NotFound.vue';
+import HomePage from '../page/HomePage.vue';
+import ProductImage from '@/components/ProductImage.vue';
+import App from '@/App.vue';
 
 const routes = [
   {
     path: '/',
-    component: HelloWorld,
+    component: App,
   },
   {
-    path: '/welcome',
-    component: TheWelcome,
+    path: '/product',
+    component: ProductImage,
+  },{
+    path: '/home',
+    component: HomePage,
   },
   {
     path: '/:pathMatch(.*)*', 
