@@ -76,7 +76,7 @@
   
   /* Dots pattern */
   .shiny-cta::before {
-    --size: calc(100% - var(--shadow-size) * 3);
+    /* --size: calc(100% - var(--shadow-size) * 3);
     --position: 2px;
     --space: calc(var(--position) * 2);
     width: var(--size);
@@ -101,8 +101,8 @@
       transparent 10% 90%,
       black
     );
-    border-radius: inherit;
-    opacity: 0.4;
+    border-radius: inherit; */
+    opacity: 0;
     z-index: -1;
   }
   
@@ -138,6 +138,10 @@
   
     animation: gradient-angle 3s linear infinite;
   }
+  button.shiny-cta {
+    margin-right: -1000px;
+    margin-left: 100px;
+}
   
   .shiny-cta::after {
     animation: shimmer 3s linear infinite;
@@ -196,12 +200,17 @@
     display: grid;
     place-items: center;
     color: white;
-    background: #02040c;
+    background: #ffffff;
     font-family: "Inter", sans-serif;
     font-optical-sizing: auto;
     font-weight: 500;
     font-style: normal;
     -webkit-font-smoothing: antialiased;
   }
+  @media (max-width: 768px) {
+    button.shiny-cta{
+      margin: 0;
+    }
+}
   </style>
   

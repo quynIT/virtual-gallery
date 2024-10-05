@@ -1,386 +1,248 @@
 <template>
-  <div class="containers" :class="{ active: isActive }">
-    <div class="navbar">
-      <div class="menu">
-        <h3 class="logo">Front-End<span>Class</span></h3>
-        <div class="hamburger-menu" @click="toggleActive">
-          <div class="bar"></div>
-        </div>
-      </div>
-    </div>
-
-    <div class="main-containers">
-      <div class="main">
-        <header>
-          <div class="overlay">
-            <div class="router-view-containers">
-            <div class="inner">
-              
-                <router-view />
-              </div>
-            </div>
-          </div>
-        </header>
-      </div>
-
-      <div class="shadow one"></div>
-      <div class="shadow two"></div>
-    </div>
-
-    <div class="links">
-      <ul>
-        <li v-for="(link, index) in links" :key="index">
-          <a :href="link.url" :style="{ '--i': `${0.05 * (index + 1)}s` }">{{ link.text }}</a>
-        </li>
-      </ul>
-    </div>
+  <div class="mb-20">
+    <nav>
+      <button type="button" title="Home">
+        <span>Home</span>
+        <span class="material-symbols-outlined" aria-hidden="true">home</span>
+        <svg viewBox="0 0 300 300" aria-hidden="true">
+          <g>
+            <text fill="currentColor">
+              <textPath xlink:href="#circlePath">Home</textPath>
+            </text>
+            <text fill="currentColor">
+              <textPath xlink:href="#circlePath" startOffset="50%">Home</textPath>
+            </text>
+          </g>
+        </svg>
+      </button>
+      <button type="button">
+        <span>About</span>
+        <span class="material-symbols-outlined" aria-hidden="true">info</span>
+        <svg viewBox="0 0 300 300" aria-hidden="true">
+          <g>
+            <text fill="currentColor">
+              <textPath xlink:href="#circlePath">About</textPath>
+            </text>
+            <text fill="currentColor">
+              <textPath xlink:href="#circlePath" startOffset="50%">About</textPath>
+            </text>
+          </g>
+        </svg>
+      </button>
+      <button type="button">
+        <span>Services</span>
+        <span class="material-symbols-outlined" aria-hidden="true">linked_services</span>
+        <svg viewBox="0 0 300 300" aria-hidden="true">
+          <g>
+            <text fill="currentColor">
+              <textPath xlink:href="#circlePath">Services</textPath>
+            </text>
+            <text fill="currentColor">
+              <textPath xlink:href="#circlePath" startOffset="50%">Services</textPath>
+            </text>
+          </g>
+        </svg>
+      </button>
+      <button type="button">
+        <span>Contact</span>
+        <span class="material-symbols-outlined" aria-hidden="true">email</span>
+        <svg viewBox="0 0 300 300">
+          <g>
+            <text fill="currentColor" aria-hidden="true">
+              <textPath xlink:href="#circlePath">Contact</textPath>
+            </text>
+            <text fill="currentColor">
+              <textPath xlink:href="#circlePath" startOffset="50%">Contact</textPath>
+            </text>
+          </g>
+        </svg>
+      </button>
+      <ButtonLogin />
+    </nav>
+    <!-- SVG template with dynamic text -->
+    <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300" width="0" height="0">
+      <defs>
+        <path id="circlePath" d="M 150, 150 m -50, 0 a 50,50 0 0,1 100,0 a 50,50 0 0,1 -100,0" />
+      </defs>
+    </svg>
   </div>
 </template>
 
 <script>
+import ButtonLogin from './ButtonLogin.vue';
 export default {
-  data() {
-    return {
-      isActive: false,
-      links: [
-        { text: 'Home', url: '#' },
-        { text: 'Services', url: '#' },
-        { text: 'Portfolio', url: 'https://quynit.vercel.app/' },
-        { text: 'Testimonials', url: '#' },
-        { text: 'About', url: '#' },
-        { text: 'Contact', url: '#' },
-      ],
-    };
-  },
-  methods: {
-    toggleActive() {
-      this.isActive = !this.isActive;
-    },
-  },
+  components: { ButtonLogin },
+  name: 'NavbarAnimation',
 };
 </script>
-  
-  <style scoped>
-  @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap");
-  
-  * {
-    padding: 0;
-    margin: 0;
-    box-sizing: border-box;
-  }
-  
-  body,
-  button {
-    font-family: "Poppins", sans-serif;
-  }
-  .router-view-containers {
-  background-color: white;
-  min-height: 100vh;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-  .containers {
-    min-height: 100vh;
-    width: 100%;
-    background-color: #485461;
-    background-image: linear-gradient(135deg, #485461 0%, #28313b 74%);
-    overflow-x: hidden;
-    transform-style: preserve-3d;
-  }
-  
-  .navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 10;
-    min-height: 4rem; 
-  }
-  
-  .menu {
-  width: 100%;
-  margin: 0 auto;
+/* reset button */
+button {
+  appearance: none;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  outline: none;
+  padding: 0;
+  margin: 0;
+  font-family: inherit;
+  font-size: inherit;
+  color: inherit;
+  text-decoration: none;
+  text-transform: none;
+  line-height: normal;
+  overflow: visible;
+}
+
+body {
+  background-color: #ffffff;
+  color: white;
+  font-size: 1rem;
+  font-family: system-ui;
+  margin: 0;
+  padding: 0;
+}
+.mb-20 {
+    margin-bottom: 9rem !important;
+}
+nav {
+  justify-content: center;
+  --_clr-txt: rgb(255, 255, 255);
+  --_clr-txt-svg: rgb(147, 158, 184);
+  --_ani-speed: 6s; /* speed of rotating text */
+  display: flex;
+  gap: 4rem;
+  height: 100px;
+  align-items: center;
+  background-color: rgb(15, 23, 42);
   padding: 0 2rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center; 
-  color: #fff;
-}
-  
-  .logo {
-    font-size: 1.1rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    line-height: 4rem;
-  }
-  
-  .logo span {
-    font-weight: 300;
-  }
-  
-  .hamburger-menu {
-    width: 3rem;
-    height: 3rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-  }
-  
-  .bar {
-    width: 1.9rem;
-    height: 1.5px;
-    border-radius: 2px;
-    background-color: #eee;
-    transition: 0.5s;
-    position: relative;
-  }
-  
-  .bar:before,
-  .bar:after {
-    content: "";
-    position: absolute;
-    width: inherit;
-    height: inherit;
-    background-color: #eee;
-    transition: 0.5s;
-  }
-  
-  .bar:before {
-    transform: translateY(-9px);
-  }
-  
-  .bar:after {
-    transform: translateY(9px);
-  }
-  
-  .main {
-    position: relative;
-    width: 100%;
-    left: 0;
-    z-index: 5;
-    overflow: hidden;
-    transform-origin: left;
-    transform-style: preserve-3d;
-    transition: 0.5s;
-  }
-  
-  header {
-    min-height: 100vh;
-    width: 100%;
-    background: url("bg.jpg") no-repeat top center / cover;
-    position: relative;
-  }
-  
-  img {
-    width: 600px;
-    height: 200px;
-  }
-  
-  .overlay {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  .inner {
-    margin-top:250px ;
-    text-align: center;
-    padding: 0 2rem;
-    background-color: white;
-  min-height: 100vh;
+  font-size: 1.4rem;
   width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  }
-
-  
-  .title {
-    font-size: 2.7rem;
-  }
-  
-  .btn {
-    margin-top: 1rem;
-    padding: 0.6rem 1.8rem;
-    background-color: #1179e7;
-    border: none;
-    border-radius: 25px;
-    color: #fff;
-    text-transform: uppercase;
-    cursor: pointer;
-    text-decoration: none;
-  }
-  
-  .containers.active .bar {
-    transform: rotate(360deg);
-    background-color: transparent;
-  }
-  
-  .containers.active .bar:before {
-    transform: translateY(0) rotate(45deg);
-  }
-  
-  .containers.active .bar:after {
-    transform: translateY(0) rotate(-45deg);
-  }
-  
-  .containers.active .main {
-    animation: main-animation 0.5s ease;
-    cursor: pointer;
-    transform: perspective(1300px) rotateY(20deg) translateZ(310px) scale(0.5);
-  }
-  
-  @keyframes main-animation {
-    from {
-      transform: translate(0);
-    }
-  
-    to {
-      transform: perspective(1300px) rotateY(20deg) translateZ(310px) scale(0.5);
-    }
-  }
-  
-  .links {
-    position: absolute;
-    width: 30%;
-    right: 0;
-    top: 0;
-    height: 100vh;
-    z-index: 2;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  
-  ul {
-    list-style: none;
-  }
-  
-  .links a {
-    text-decoration: none;
-    color: #eee;
-    padding: 0.7rem 0;
-    display: inline-block;
-    font-size: 1rem;
-    font-weight: 300;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: 0.3s;
-    opacity: 0;
-    transform: translateY(10px);
-    animation: hide 0.5s forwards ease;
-  }
-  
-  .links a:hover {
-    color: #fff;
-  }
-  
-  .containers.active .links a {
-    animation: appear 0.5s forwards ease var(--i);
-  }
-  
-  @keyframes appear {
-    from {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0px);
-    }
-  }
-  
-  @keyframes hide {
-    from {
-      opacity: 1;
-      transform: translateY(0px);
-    }
-    to {
-      opacity: 0;
-      transform: translateY(10px);
-    }
-  }
-  
-  .shadow {
-    position: absolute;
-    width: 100%;
-    height: 100vh;
-    top: 0;
-    left: 0;
-    transform-style: preserve-3d;
-    transform-origin: left;
-    transition: 0.5s;
-    background-color: white;
-  }
-  
-  .shadow.one {
-    z-index: -1;
-    opacity: 0.15;
-  }
-  
-  .shadow.two {
-    z-index: -2;
-    opacity: 0.1;
-  }
-  
-  .containers.active .shadow.one {
-    animation: shadow-one 0.6s ease-out;
-    transform: perspective(1300px) rotateY(20deg) translateZ(215px) scale(0.5);
-  }
-  
-  @keyframes shadow-one {
-    0% {
-      transform: translate(0);
-    }
-  
-    5% {
-      transform: perspective(1300px) rotateY(20deg) translateZ(310px) scale(0.5);
-    }
-  
-    100% {
-      transform: perspective(1300px) rotateY(20deg) translateZ(215px) scale(0.5);
-    }
-  }
-  
-  .containers.active .shadow.two {
-    animation: shadow-two 0.6s ease-out;
-    transform: perspective(1300px) rotateY(20deg) translateZ(120px) scale(0.5);
-  }
-  
-  @keyframes shadow-two {
-    0% {
-      transform: translate(0);
-    }
-  
-    20% {
-      transform: perspective(1300px) rotateY(20deg) translateZ(310px) scale(0.5);
-    }
-  
-    100% {
-      transform: perspective(1300px) rotateY(20deg) translateZ(120px) scale(0.5);
-    }
-  }
-  
-  .containers.active .main:hover + .shadow.one {
-    transform: perspective(1300px) rotateY(20deg) translateZ(230px) scale(0.5);
-  }
-  
-  .containers.active .main:hover {
-    transform: perspective(1300px) rotateY(20deg) translateZ(340px) scale(0.5);
-  }
-  .navbar {
-    background-color: #29323c;
-    width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
 }
-  </style>
+
+nav > button {
+  position: relative;
+  display: grid;
+  place-content: center;
+  grid-template-areas: 'stack';
+  padding: 0 1rem;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+
+/* place button items on top of each other */
+nav > button > span {
+  transition: all 300ms ease-in-out;
+  grid-area: stack;
+}
+
+/* nav icon */
+nav > button > span:last-of-type {
+  transform: scale(0);
+  transition-delay: 0ms;
+  border-radius: 50%;
+}
+
+/* hover - hide text */
+nav > button:focus-visible > span:first-of-type,
+nav > button:hover > span:first-of-type {
+  transform: scale(0);
+}
+
+/* hover - reveal icon */
+nav > button:focus-visible > span:last-of-type,
+nav > button:hover > span:last-of-type {
+  transform: scale(1);
+}
+
+/* nav SVG circular text */
+nav > button > svg {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  transform-origin: center;
+  opacity: 0;
+  text-transform: uppercase;
+  transition: all 300ms ease-in-out;
+  color: var(--_clr-txt-svg);
+}
+
+/* hover - reveal rotating SVG */
+nav > button:focus-visible > svg,
+nav > button:hover > svg {
+  transform: translate(-50%, -50%) scale(1);
+  opacity: 1;
+  transition-delay: 150ms;
+  transition: all 300ms ease-in-out;
+}
+
+button svg g {
+  transform-origin: center;
+  animation: rotate var(--_ani-speed) linear infinite;
+}
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+
+/* Tablet screens (up to 768px) */
+@media (max-width: 768px) {
+  nav {
+    flex-direction: column;
+    gap: 2rem;
+    height: auto;
+    padding: 1rem;
+  }
+  nav > button > svg {
+    width: 150px;
+    height: 150px;
+  }
+}
+
+/* Mobile screens (up to 480px) */
+@media (max-width: 480px) {
+  nav {
+    gap: 1.5rem;
+    padding: 0.5rem;
+  }
+  nav > button {
+    padding: 0 0.5rem;
+  }
+  nav > button > svg {
+    width: 100px;
+    height: 100px;
+  }
+  nav > button > span:first-of-type {
+    font-size: 0.8rem;
+  }
+}
+@media (min-width: 1024px) and (max-width: 1440px) {
+  nav {
+    gap: 0rem;
+    padding: 0.5rem;
+  }
+}
+</style>

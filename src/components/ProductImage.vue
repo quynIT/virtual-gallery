@@ -1,12 +1,12 @@
 <template>
-    <div class="bg-gray-100 p-5">
+    <div class="bg-gray-100 p-5 mt-32">
       <div class="grid-custom max-w-8xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
         <div v-for="(item, index) in items" :key="index" :class="item.class">
-          <div class="relative bg-white rounded-lg overflow-hidden shadow-sm h-full">
+          <div class=" bg-white rounded-lg overflow-hidden shadow-sm h-full">
             <img :src="item.image" :alt="item.alt" class="w-full h-full object-cover">
-            <div class="absolute bottom-0 left-0 bg-white bg-opacity-75 p-1 text-xs">
+            <!-- <div class="absolute bottom-0 left-0 bg-white bg-opacity-75 p-1 text-xs">
               <p>{{ item.description }}</p>
-            </div>
+            </div> -->
           </div>
         </div>
       </div>
