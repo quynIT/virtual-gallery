@@ -1,6 +1,9 @@
 <template>
     <div>
-      <button class="shiny-cta"><span>Get unlimited access</span></button>
+<button class="shiny-cta">
+      <span class="material-symbols-outlined">library_add</span>
+      <span class="ml-2">Add Image</span>
+</button>
     </div>
   </template>
   
@@ -212,5 +215,14 @@
       margin: 0;
     }
 }
+button.shiny-cta {
+  display: inline-flex; 
+  align-items: center;  
+}
+
+.material-symbols-outlined {
+  font-size: 24px; 
+}
+
   </style>
   

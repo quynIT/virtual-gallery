@@ -1,7 +1,7 @@
 <template>
   <div class="mb-20">
     <nav>
-      <button type="button" title="Home">
+      <button type="button" title="Home" onclick="window.location.href='#';">
         <span>Home</span>
         <span class="material-symbols-outlined" aria-hidden="true">home</span>
         <svg viewBox="0 0 300 300" aria-hidden="true">
@@ -15,30 +15,30 @@
           </g>
         </svg>
       </button>
-      <button type="button">
-        <span>About</span>
-        <span class="material-symbols-outlined" aria-hidden="true">info</span>
+      <button type="button" onclick="window.location.href='https://quynit.vercel.app/';">
+        <span>Portfolio</span>
+        <span class="material-symbols-outlined" aria-hidden="true">person</span>
         <svg viewBox="0 0 300 300" aria-hidden="true">
           <g>
             <text fill="currentColor">
-              <textPath xlink:href="#circlePath">About</textPath>
+              <textPath xlink:href="#circlePath">Portfolio</textPath>
             </text>
             <text fill="currentColor">
-              <textPath xlink:href="#circlePath" startOffset="50%">About</textPath>
+              <textPath xlink:href="#circlePath" startOffset="50%">Portfolio</textPath>
             </text>
           </g>
         </svg>
       </button>
       <button type="button">
-        <span>Services</span>
-        <span class="material-symbols-outlined" aria-hidden="true">linked_services</span>
+        <span>Moment</span>
+        <span class="material-symbols-outlined">favorite</span>
         <svg viewBox="0 0 300 300" aria-hidden="true">
           <g>
             <text fill="currentColor">
-              <textPath xlink:href="#circlePath">Services</textPath>
+              <textPath xlink:href="#circlePath">Moment</textPath>
             </text>
             <text fill="currentColor">
-              <textPath xlink:href="#circlePath" startOffset="50%">Services</textPath>
+              <textPath xlink:href="#circlePath" startOffset="50%">Moment</textPath>
             </text>
           </g>
         </svg>

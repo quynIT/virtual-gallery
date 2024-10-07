@@ -1,6 +1,5 @@
 <script setup>
 import NavbarAnimation from "./components/NavbarAnimation.vue";
-import LayoutPage from "./page/LayoutPage.vue";
 </script>
 
 <template>
