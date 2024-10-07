@@ -18,9 +18,9 @@
     --shiny-cta-bg: #000000;
     --shiny-cta-bg-subtle: #1a1818;
     --shiny-cta-fg: #ffffff;
-    --shiny-cta-highlight: blue;
+    --shiny-cta-highlight: #f25f4c;
     --shiny-cta-highlight-subtle: #8484ff;
-    --hover-glow-color: rgba(0, 122, 255, 0.8); /* Màu xanh dương cho ánh sáng viền */
+    --hover-glow-color: #f25f4c; /* Màu xanh dương cho ánh sáng viền */
   }
   
   .shiny-cta {

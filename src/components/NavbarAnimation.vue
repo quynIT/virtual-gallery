@@ -122,7 +122,7 @@ nav {
   gap: 4rem;
   height: 100px;
   align-items: center;
-  background-color: rgb(15, 23, 42);
+  background-color: #010101;
   padding: 0 2rem;
   font-size: 1.4rem;
   width: 100%;
@@ -217,8 +217,8 @@ button svg g {
     padding: 1rem;
   }
   nav > button > svg {
-    width: 150px;
-    height: 150px;
+    width: 100px;
+    height: 100px;
   }
 }
 
