@@ -1,158 +1,212 @@
 <template>
-    <div class="container">
-      <h2 class="form-title">Upload Ảnh Mới</h2>
-      <form @submit.prevent="handleSubmit">
-        <div class="form-group">
-          <label for="author">Tên tác giả</label>
+  <div class="container">
+    <h2 class="form-title">Upload Ảnh Mới</h2>
+    <form @submit.prevent="handleSubmit">
+      <div class="form-group">
+        <label for="author">Tên tác giả</label>
+        <input 
+          type="text" 
+          id="author" 
+          class="form-control" 
+          placeholder="Nhập tên tác giả"
+          v-model="formData.author"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="title">Tiêu đề ảnh</label>
+        <input 
+          type="text" 
+          id="title" 
+          class="form-control" 
+          placeholder="Nhập tiêu đề ảnh"
+          v-model="formData.title"
+          required
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="description">Nội dung ảnh</label>
+        <textarea 
+          id="description" 
+          class="form-control" 
+          placeholder="Mô tả chi tiết về ảnh của bạn"
+          v-model="formData.description"
+          required
+        ></textarea>
+      </div>
+
+      <div class="form-group">
+        <label>Tải ảnh lên</label>
+        <div 
+          class="file-upload"
+          :class="{ 'dragover': isDragging }"
+          @dragenter.prevent="isDragging = true"
+          @dragleave.prevent="isDragging = false"
+          @dragover.prevent
+          @drop.prevent="handleDrop"
+        >
           <input 
-            type="text" 
-            id="author" 
-            class="form-control" 
-            placeholder="Nhập tên tác giả"
-            v-model="formData.author"
+            type="file" 
+            accept="image/*"
+            @change="handleFileChange"
+            ref="fileInput"
+            required
           >
-        </div>
-  
-        <div class="form-group">
-          <label for="title">Tiêu đề ảnh</label>
-          <input 
-            type="text" 
-            id="title" 
-            class="form-control" 
-            placeholder="Nhập tiêu đề ảnh"
-            v-model="formData.title"
-          >
-        </div>
-  
-        <div class="form-group">
-          <label for="description">Nội dung ảnh</label>
-          <textarea 
-            id="description" 
-            class="form-control" 
-            placeholder="Mô tả chi tiết về ảnh của bạn"
-            v-model="formData.description"
-          ></textarea>
-        </div>
-  
-        <div class="form-group">
-          <label>Tải ảnh lên</label>
-          <div 
-            class="file-upload"
-            :class="{ 'dragover': isDragging }"
-            @dragenter.prevent="isDragging = true"
-            @dragleave.prevent="isDragging = false"
-            @dragover.prevent
-            @drop.prevent="handleDrop"
-          >
-            <input 
-              type="file" 
-              accept="image/*"
-              @change="handleFileChange"
-              ref="fileInput"
-            >
-            <i>📸</i>
-            <p>
-              Kéo thả ảnh vào đây hoặc click để chọn file<br>
-              <small style="color: #9ca3af">Hỗ trợ: JPG, PNG, GIF</small>
-            </p>
-            <div v-if="formData.imagePreview" class="image-preview">
-              <img :src="formData.imagePreview" alt="Preview">
-            </div>
+          <i>📸</i>
+          <p>
+            Kéo thả ảnh vào đây hoặc click để chọn file<br>
+            <small style="color: #9ca3af">Hỗ trợ: JPG, PNG, GIF</small>
+          </p>
+          <div v-if="formData.imagePreview" class="image-preview">
+            <img :src="formData.imagePreview" alt="Preview">
           </div>
         </div>
+      </div>
+
+      <div v-if="uploadProgress > 0 && uploadProgress < 100" class="progress-bar">
+        <div class="progress" :style="{ width: uploadProgress + '%' }"></div>
+        <span>{{ Math.round(uploadProgress) }}%</span>
+      </div>
+
+      <button type="submit" class="submit-btn" :disabled="isSubmitting">
+        {{ isSubmitting ? 'Đang xử lý...' : 'Đăng tải' }}
+      </button>
+    </form>
+  </div>
+</template>
+
+<script>
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
+import { db, storage } from '../firebase/config';
+
+export default {
+  name: 'AddImage',
   
-        <button type="submit" class="submit-btn" :disabled="isSubmitting">
-          {{ isSubmitting ? 'Đang xử lý...' : 'Đăng tải' }}
-        </button>
-      </form>
-    </div>
-  </template>
-  
-  <script>
-  export default {
-    name: 'UploadForm',
-    
-    data() {
-      return {
-        formData: {
-          author: '',
-          title: '',
-          description: '',
-          image: null,
-          imagePreview: null
-        },
-        isDragging: false,
-        isSubmitting: false
+  data() {
+    return {
+      formData: {
+        author: '',
+        title: '',
+        description: '',
+        image: null,
+        imagePreview: null
+      },
+      isDragging: false,
+      isSubmitting: false,
+      uploadProgress: 0
+    }
+  },
+
+  methods: {
+    handleFileChange(event) {
+      const file = event.target.files[0]
+      if (file) {
+        this.processFile(file)
       }
     },
-  
-    methods: {
-      handleFileChange(event) {
-        const file = event.target.files[0]
-        if (file) {
-          this.processFile(file)
-        }
-      },
-  
-      handleDrop(event) {
-        this.isDragging = false
-        const file = event.dataTransfer.files[0]
-        if (file && file.type.startsWith('image/')) {
-          this.processFile(file)
-        }
-      },
-  
-      processFile(file) {
-        this.formData.image = file
-        const reader = new FileReader()
-        reader.onload = (e) => {
-          this.formData.imagePreview = e.target.result
-        }
-        reader.readAsDataURL(file)
-      },
-  
-      async handleSubmit() {
-        if (!this.formData.image) {
-          alert('Vui lòng chọn một ảnh')
-          return
-        }
-  
-        this.isSubmitting = true
-        try {
-          const formData = new FormData()
-          formData.append('author', this.formData.author)
-          formData.append('title', this.formData.title)
-          formData.append('description', this.formData.description)
-          formData.append('image', this.formData.image)
-  
-          await new Promise(resolve => setTimeout(resolve, 1500))
-          console.log('Form submitted:', formData)
-          
-          this.resetForm()
-          alert('Upload thành công!')
-        } catch (error) {
-          console.error('Error submitting form:', error)
-          alert('Có lỗi xảy ra khi upload!')
-        } finally {
-          this.isSubmitting = false
-        }
-      },
-  
-      resetForm() {
-        this.formData = {
-          author: '',
-          title: '',
-          description: '',
-          image: null,
-          imagePreview: null
-        }
-        if (this.$refs.fileInput) {
-          this.$refs.fileInput.value = ''
-        }
+
+    handleDrop(event) {
+      this.isDragging = false
+      const file = event.dataTransfer.files[0]
+      if (file && file.type.startsWith('image/')) {
+        this.processFile(file)
+      }
+    },
+
+    processFile(file) {
+      this.formData.image = file
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        this.formData.imagePreview = e.target.result
+      }
+      reader.readAsDataURL(file)
+    },
+
+    async handleSubmit() {
+      if (!this.formData.image) {
+        alert('Vui lòng chọn một ảnh')
+        return
+      }
+
+      this.isSubmitting = true
+      try {
+        // 1. Upload ảnh lên Firebase Storage
+        const imageUrl = await this.uploadImage(this.formData.image)
+        
+        // 2. Lưu metadata vào Firestore
+        await this.saveImageData(imageUrl)
+        
+        this.resetForm()
+        alert('Upload thành công!')
+      } catch (error) {
+        console.error('Error submitting form:', error)
+        alert('Có lỗi xảy ra khi upload: ' + error.message)
+      } finally {
+        this.isSubmitting = false
+        this.uploadProgress = 0
+      }
+    },
+
+    async uploadImage(file) {
+      return new Promise((resolve, reject) => {
+        // Tạo tên file unique bằng timestamp
+        const fileName = `${Date.now()}-${file.name}`
+        // Tạo reference đến vị trí lưu file trên Storage
+        const storageRef = ref(storage, `images/${fileName}`)
+        
+        // Tạo upload task
+        const uploadTask = uploadBytesResumable(storageRef, file)
+
+        // Theo dõi tiến trình upload
+        uploadTask.on('state_changed',
+          (snapshot) => {
+            // Cập nhật tiến trình
+            this.uploadProgress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+          },
+          (error) => {
+            // Xử lý lỗi
+            reject(error)
+          },
+          async () => {
+            // Upload hoàn tất, lấy download URL
+            const downloadURL = await getDownloadURL(uploadTask.snapshot.ref)
+            resolve(downloadURL)
+          }
+        )
+      })
+    },
+
+    async saveImageData(imageUrl) {
+      // Tạo document mới trong collection 'images'
+      await addDoc(collection(db, 'images'), {
+        author: this.formData.author,
+        title: this.formData.title,
+        description: this.formData.description,
+        imageUrl: imageUrl,
+        createdAt: serverTimestamp(),
+        likes: 0,
+        views: 0
+      })
+    },
+
+    resetForm() {
+      this.formData = {
+        author: '',
+        title: '',
+        description: '',
+        image: null,
+        imagePreview: null
+      }
+      if (this.$refs.fileInput) {
+        this.$refs.fileInput.value = ''
       }
     }
   }
-  </script>
+}
+</script>
   
   <style scoped>
   @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
@@ -230,6 +284,7 @@
   }
   
   .form-control {
+    color: #333;
     width: 100%;
     padding: 12px 16px;
     border: 2px solid #e5e7eb;
@@ -342,4 +397,30 @@
     opacity: 0.7;
     cursor: not-allowed;
   }
+  .progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #f3f4f6;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.progress {
+  height: 100%;
+  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.progress-bar span {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #666;
+  font-size: 12px;
+  font-weight: 500;
+}
   </style>
