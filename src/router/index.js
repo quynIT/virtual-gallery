@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import NotFound from '../page/NotFound.vue';
 import ProductImage from '@/components/ProductImage.vue';
-
+import AddImage from '../page/AddImage.vue'
 
 const routes = [
   {
@@ -13,6 +13,11 @@ const routes = [
     name: 'NotFound',
     component: NotFound,
   },
+  {
+    path: '/add-image', 
+    name: 'AddImage',
+    component: AddImage,
+  }
 ];
 
 const router = createRouter({

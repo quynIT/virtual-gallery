@@ -131,6 +131,7 @@ nav {
   left: 0;
   right: 0;
   margin: 0 auto;
+  z-index: 1;
 }
 
 nav > button {
@@ -245,4 +246,5 @@ button svg g {
     padding: 0.5rem;
   }
 }
+
 </style>
