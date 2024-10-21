@@ -2,9 +2,7 @@
     <div>
 <button class="shiny-cta">
       <span class="material-symbols-outlined">library_add</span>
-      <router-link to="/add-image">
-      <span class="ml-2">Add Image</span>
-     </router-link>
+      <span class="ml-2" onclick="window.location.href='/add-image';">Add Image</span>
 </button>
     </div>
   </template>
