@@ -11,7 +11,7 @@
     </button>
 
     <nav :class="{ 'menu-open': isMenuOpen }">
-      <button type="button" title="Home" onclick="window.location.href='/';">
+      <button type="button" title="Home" @click="handleNavClick('/')">
         <span>Home</span>
         <span class="material-symbols-outlined" aria-hidden="true">home</span>
         <svg viewBox="0 0 300 300" aria-hidden="true">
@@ -25,7 +25,7 @@
           </g>
         </svg>
       </button>
-      <button type="button" onclick="window.location.href='https://quynit.vercel.app/';">
+      <button type="button" @click="handleNavClick('https://quynit.vercel.app/')">
         <span>Portfolio</span>
         <span class="material-symbols-outlined" aria-hidden="true">person</span>
         <svg viewBox="0 0 300 300" aria-hidden="true">
@@ -39,7 +39,7 @@
           </g>
         </svg>
       </button>
-      <button type="button">
+      <button type="button" @click="handleNavClick('/moment')">
         <span>Moment</span>
         <span class="material-symbols-outlined">favorite</span>
         <svg viewBox="0 0 300 300" aria-hidden="true">
@@ -53,7 +53,7 @@
           </g>
         </svg>
       </button>
-      <button type="button">
+      <button type="button" @click="handleNavClick('/contact')">
         <span>Contact</span>
         <span class="material-symbols-outlined" aria-hidden="true">email</span>
         <svg viewBox="0 0 300 300">
@@ -67,7 +67,7 @@
           </g>
         </svg>
       </button>
-      <ButtonLogin />
+      <ButtonLogin @click="closeMenu" />
     </nav>
     
     <!-- SVG template with dynamic text -->
@@ -93,12 +93,39 @@ export default {
   methods: {
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
+    },
+    closeMenu() {
+      this.isMenuOpen = false;
+    },
+    handleNavClick(path) {
+      this.closeMenu(); // Đóng menu trước khi chuyển trang
+      if (path.startsWith('http')) {
+        window.location.href = path;
+      } else {
+        // Nếu bạn đang sử dụng Vue Router
+        this.$router.push(path);
+        // Hoặc nếu không dùng Vue Router
+        // window.location.href = path;
+      }
+    }
+  },
+  mounted() {
+    // Thêm event listener để đóng menu khi chuyển trang
+    if (typeof window !== 'undefined') {
+      window.addEventListener('popstate', this.closeMenu);
+    }
+  },
+  beforeUnmount() {
+    // Cleanup event listener
+    if (typeof window !== 'undefined') {
+      window.removeEventListener('popstate', this.closeMenu);
     }
   }
 };
 </script>
 
 <style scoped>
+/* CSS giữ nguyên như cũ */
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
 
 * {
@@ -251,7 +278,7 @@ button svg g {
 /* Mobile and Tablet styles */
 @media (max-width: 768px) {
   .nav-container {
-    height: 60px; /* Fixed height for mobile header */
+    height: 60px;
   }
 
   .hamburger-menu {

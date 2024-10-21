@@ -1,13 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import NotFound from '../page/NotFound.vue';
 import ProductImage from '@/components/ProductImage.vue';
-import AddImage from '../page/AddImage.vue';
-
-// Giả lập hàm kiểm tra người dùng đăng nhập
-function isUserLoggedIn() {
-  // Logic kiểm tra người dùng đăng nhập
-  return localStorage.getItem('userLoggedIn') === 'true';
-}
+import AddImage from '../page/AddImage.vue'
 
 const routes = [
   {
@@ -31,10 +25,5 @@ const router = createRouter({
   routes,
 });
 
-// Thêm Navigation Guard
-router.beforeEach((to, from, next) => {
-  // Không chặn người dùng truy cập vào các link trực tiếp
-  next();
-});
-
+  
 export default router;
