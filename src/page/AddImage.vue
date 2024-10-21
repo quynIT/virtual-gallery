@@ -218,7 +218,7 @@ export default {
     font-family: 'Poppins', sans-serif;
   }
   *{
-    width: 600px;
+    width: auto;
   }
   .container {
     background: white;
@@ -226,13 +226,14 @@ export default {
     border-radius: 20px;
     box-shadow: 0 15px 30px rgba(0,0,0,0.08);
     width: 100%;
-    max-width: 800px; /* Tăng từ 600px lên 800px */
+    min-width: 700px; 
+    max-width: 800px;
     transform: translateY(20px);
     opacity: 0;
     animation: fadeIn 0.5s ease forwards;
     position: relative;
-    z-index: 0; /* Thêm z-index thấp hơn navbar */
-    margin: 20px auto; /* Thêm margin để tránh bị dính sát các cạnh */
+    z-index: 0;
+    margin: 20px auto; 
   }
   
   @keyframes fadeIn {
@@ -259,7 +260,7 @@ export default {
     transform: translateX(-50%);
     width: 50px;
     height: 3px;
-    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    background: linear-gradient(90deg, #2e434c, #4a4c53);
     border-radius: 10px;
   }
   
@@ -361,7 +362,7 @@ export default {
     display: block;
     width: 100%;
     padding: 14px;
-    background: linear-gradient(90deg, #6366f1, #8b5cf6);
+    background: linear-gradient(90deg, #2e434c, #4a4c53);
     border: none;
     border-radius: 8px;
     color: white;
@@ -409,7 +410,7 @@ export default {
 
 .progress {
   height: 100%;
-  background: linear-gradient(90deg, #6366f1, #8b5cf6);
+  background: linear-gradient(90deg, #2e434c, #4a4c53);
   border-radius: 10px;
   transition: width 0.3s ease;
 }
@@ -423,4 +424,10 @@ export default {
   font-size: 12px;
   font-weight: 500;
 }
+  @media(max-width: 770px){
+    .container{
+      min-width: 380px;
+      margin-top:330px;
+    }
+  }
   </style>
