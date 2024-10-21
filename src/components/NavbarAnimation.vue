@@ -1,7 +1,7 @@
 <template>
   <div class="mb-20">
     <nav>
-      <button type="button" title="Home" onclick="window.location.href='#';">
+      <button type="button" title="Home" onclick="window.location.href='/';">
         <span>Home</span>
         <span class="material-symbols-outlined" aria-hidden="true">home</span>
         <svg viewBox="0 0 300 300" aria-hidden="true">
