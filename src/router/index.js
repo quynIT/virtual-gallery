@@ -9,14 +9,14 @@ const routes = [
     component: ProductImage,
   },
   {
-    path: '/:pathMatch(.*)*', 
-    name: 'NotFound',
-    component: NotFound,
-  },
-  {
     path: '/add-image', 
     name: 'AddImage',
     component: AddImage,
+  },
+  {
+    path: '/:pathMatch(.*)*', 
+    name: 'NotFound',
+    component: NotFound,
   }
 ];
 
