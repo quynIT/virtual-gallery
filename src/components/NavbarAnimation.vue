@@ -1,6 +1,16 @@
 <template>
-  <div class="mb-20">
-    <nav>
+  <div class="nav-container">
+    <button 
+      class="hamburger-menu"
+      @click="toggleMenu"
+      :class="{ 'is-active': isMenuOpen }"
+    >
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+      <span class="hamburger-line"></span>
+    </button>
+
+    <nav :class="{ 'menu-open': isMenuOpen }">
       <button type="button" title="Home" onclick="window.location.href='/';">
         <span>Home</span>
         <span class="material-symbols-outlined" aria-hidden="true">home</span>
@@ -59,6 +69,7 @@
       </button>
       <ButtonLogin />
     </nav>
+    
     <!-- SVG template with dynamic text -->
     <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 300 300" width="0" height="0">
       <defs>
@@ -70,18 +81,39 @@
 
 <script>
 import ButtonLogin from './ButtonLogin.vue';
+
 export default {
   components: { ButtonLogin },
   name: 'NavbarAnimation',
+  data() {
+    return {
+      isMenuOpen: false
+    }
+  },
+  methods: {
+    toggleMenu() {
+      this.isMenuOpen = !this.isMenuOpen;
+    }
+  }
 };
 </script>
 
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+
+.nav-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  background-color: #010101;
 }
 
 /* reset button */
@@ -102,22 +134,44 @@ button {
   overflow: visible;
 }
 
-body {
-  background-color: #ffffff;
-  color: white;
-  font-size: 1rem;
-  font-family: system-ui;
-  margin: 0;
-  padding: 0;
+/* Hamburger menu styles */
+.hamburger-menu {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 30px;
+  height: 20px;
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  background: none;
 }
-.mb-20 {
-    margin-bottom: 9rem !important;
+
+.hamburger-line {
+  width: 100%;
+  height: 2px;
+  background-color: white;
+  transition: all 0.3s ease;
 }
+
+.hamburger-menu.is-active .hamburger-line:nth-child(1) {
+  transform: translateY(9px) rotate(45deg);
+}
+
+.hamburger-menu.is-active .hamburger-line:nth-child(2) {
+  opacity: 0;
+}
+
+.hamburger-menu.is-active .hamburger-line:nth-child(3) {
+  transform: translateY(-9px) rotate(-45deg);
+}
+
 nav {
   justify-content: center;
   --_clr-txt: rgb(255, 255, 255);
   --_clr-txt-svg: rgb(147, 158, 184);
-  --_ani-speed: 6s; /* speed of rotating text */
+  --_ani-speed: 6s;
   display: flex;
   gap: 4rem;
   height: 100px;
@@ -125,13 +179,7 @@ nav {
   background-color: #010101;
   padding: 0 2rem;
   font-size: 1.4rem;
-  width: 100%;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  z-index: 1;
+  color: white;
 }
 
 nav > button {
@@ -144,32 +192,27 @@ nav > button {
   font-weight: 300;
 }
 
-/* place button items on top of each other */
 nav > button > span {
   transition: all 300ms ease-in-out;
   grid-area: stack;
 }
 
-/* nav icon */
 nav > button > span:last-of-type {
   transform: scale(0);
   transition-delay: 0ms;
   border-radius: 50%;
 }
 
-/* hover - hide text */
 nav > button:focus-visible > span:first-of-type,
 nav > button:hover > span:first-of-type {
   transform: scale(0);
 }
 
-/* hover - reveal icon */
 nav > button:focus-visible > span:last-of-type,
 nav > button:hover > span:last-of-type {
   transform: scale(1);
 }
 
-/* nav SVG circular text */
 nav > button > svg {
   position: absolute;
   width: 200px;
@@ -184,13 +227,11 @@ nav > button > svg {
   color: var(--_clr-txt-svg);
 }
 
-/* hover - reveal rotating SVG */
 nav > button:focus-visible > svg,
 nav > button:hover > svg {
   transform: translate(-50%, -50%) scale(1);
   opacity: 1;
   transition-delay: 150ms;
-  transition: all 300ms ease-in-out;
 }
 
 button svg g {
@@ -207,44 +248,62 @@ button svg g {
   }
 }
 
-/* Responsive adjustments */
-
-/* Tablet screens (up to 768px) */
+/* Mobile and Tablet styles */
 @media (max-width: 768px) {
-  nav {
-    flex-direction: column;
-    gap: 2rem;
-    height: auto;
-    padding: 1rem;
+  .nav-container {
+    height: 60px; /* Fixed height for mobile header */
   }
+
+  .hamburger-menu {
+    display: flex;
+  }
+
+  nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    flex-direction: column;
+    justify-content: center;
+    transform: translateY(-100%);
+    transition: transform 0.3s ease;
+    padding-top: 60px;
+    gap: 2rem;
+    background-color: #010101;
+  }
+
+  nav.menu-open {
+    transform: translateY(0);
+  }
+
+  nav > button {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0;
+  }
+
   nav > button > svg {
     width: 100px;
     height: 100px;
   }
 }
 
-/* Mobile screens (up to 480px) */
+/* Additional responsive adjustments */
 @media (max-width: 480px) {
-  nav {
-    gap: 1.5rem;
-    padding: 0.5rem;
-  }
   nav > button {
-    padding: 0 0.5rem;
+    padding: 0.8rem 0;
   }
-  nav > button > svg {
-    width: 100px;
-    height: 100px;
-  }
+  
   nav > button > span:first-of-type {
     font-size: 0.8rem;
   }
 }
+
 @media (min-width: 1024px) and (max-width: 1440px) {
   nav {
     gap: 0rem;
     padding: 0.5rem;
   }
 }
-
 </style>

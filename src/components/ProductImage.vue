@@ -116,26 +116,14 @@ export default {
   }
 }
 
-@media (max-width: 639px) {
-  .mt-32 {
-    margin-top: 21rem;
-  }
-}
 
 @media (max-width: 539px) {
-  .mt-32 {
-    margin-top: 17rem;
-  }
+  
   .item-sub {
     display: none;
   }
 }
 
-@media (min-width: 640px) and (max-width: 767px) {
-  .mt-32 {
-    margin-top: 21rem;
-  }
-}
 
 img {
   width: 100%;

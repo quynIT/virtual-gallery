@@ -234,6 +234,7 @@ export default {
     position: relative;
     z-index: 0;
     margin: 20px auto; 
+    margin-top: 150px;
   }
   
   @keyframes fadeIn {
@@ -427,7 +428,7 @@ export default {
   @media(max-width: 770px){
     .container{
       min-width: 380px;
-      margin-top:330px;
+      margin-top:80px;
     }
   }
   </style>
